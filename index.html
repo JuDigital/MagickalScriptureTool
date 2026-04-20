@@ -409,7 +409,7 @@ body::before {
         </div>
       </div>
 
-      <button class="btn-submit" id="generateBtn" onclick="generate()">Receive Your Scriptures</button>
+      <button class="btn-submit" onclick="generate()">Receive Your Scriptures</button>
     </div>
   </div>
 
@@ -430,126 +430,199 @@ function setCount(n, el) {
   el.classList.add('sel');
 }
 
-async function generate() {
+const DB = {
+  gambling: {
+    label: "Gambling Luck and Games of Chance",
+    scriptures: [
+      { ref:"Ecclesiastes 9:11", text:"I returned and saw under the sun that the race is not to the swift, nor the battle to the strong, neither yet bread to the wise, nor yet riches to men of understanding, nor yet favour to men of skill; but time and chance happeneth to them all.", explanation:"This is one of the most powerful scriptures for gambling and games of chance in all of rootwork. It establishes that chance itself is a force that moves through all people and all things. When you activate this verse before sitting down at a table, a slot machine, or buying a number, you are aligning yourself with the universal current of chance and positioning yourself as someone time and fortune is moving toward. It does not say chance visits the strong or the wise. It says chance visits them ALL. You are included in that all. Work this scripture with a green candle and your petition." },
+      { ref:"Deuteronomy 8:18", text:"But thou shalt remember the Lord thy God: for it is he that giveth thee power to get wealth, that he may establish his covenant.", explanation:"The power to get wealth is a divine gift already placed inside you. In hoodoo tradition this verse is worked specifically to activate money drawing energy before any game of chance. It shifts your vibration from someone hoping to win into someone who already carries the power to generate wealth. That shift in energy is everything when it comes to luck work. Speak this over your hands before you play." },
+      { ref:"Psalm 65:11", text:"Thou crownest the year with thy goodness; and thy paths drop fatness.", explanation:"In spiritual practice the phrase thy paths drop fatness means wherever you walk, abundance falls. This scripture is used in road opener and luck drawing work to ensure that every path you take is anointed with overflow. For gambling specifically it means the table you sit at, the numbers you choose, and the doors you walk through are all dripping with divine fatness. Anoint yourself with a luck oil and speak this before entering any gambling establishment." },
+      { ref:"Proverbs 10:22", text:"The blessing of the Lord, it maketh rich, and he addeth no sorrow with it.", explanation:"This verse is pure money and luck activation. The blessing that comes through divine alignment brings richness with no strings attached, no sorrow, no consequence. In rootwork this is used to ensure that the money you win comes clean and stays. Work it alongside any gambling hand or mojo bag to seal the winnings so they stick and multiply rather than disappear." },
+      { ref:"Psalm 34:10", text:"The young lions do lack, and suffer hunger: but they that seek the Lord shall not want any good thing.", explanation:"They that seek shall not want any good thing. In hoodoo tradition wanting is lack energy and this verse directly cancels it out. Before you play any game of chance use this to shift yourself from the energy of wanting into the energy of already having. Those who are spiritually aligned do not lack. They receive. Position yourself as a receiver before you ever place a bet." }
+    ]
+  },
+  lottery: {
+    label: "Lottery and Number Work",
+    scriptures: [
+      { ref:"Numbers 26:55", text:"Notwithstanding the land shall be divided by lot: according to the names of the tribes of their fathers they shall inherit.", explanation:"The lot in scripture is the drawing of numbers and chance. This verse establishes that what you receive by lot is tied to your name, your lineage, and your inheritance. In number work and lottery rootwork this scripture is used to spiritually link your name to a winning draw. Your ancestors already hold an inheritance for you. The lottery is one channel through which that inheritance can arrive. Work this with your numbers written on paper under a purple candle." },
+      { ref:"Psalm 16:6", text:"The lines are fallen unto me in pleasant places; yea, I have a goodly heritage.", explanation:"Lines here refers to the lines cast in divination and lot drawing, which is the ancient equivalent of lottery numbers. This verse declares that the lines that fall to you fall in pleasant places meaning they land in your favor. Use this scripture as a spoken declaration over your lottery tickets before submission. You are not guessing. You are calling your lines to fall pleasantly." },
+      { ref:"Isaiah 65:23", text:"They shall not labour in vain, nor bring forth for trouble; for they are the seed of the blessed of the Lord, and their offspring with them.", explanation:"You shall not labor in vain. Every ticket you purchase, every number you play, every effort you make toward winning is spiritually covered under this declaration. You are the seed of the blessed. That means blessing is in your bloodline and in your spiritual DNA. Use this to seal lottery work and affirm that your effort is never wasted because you are already covered by divine blessing." },
+      { ref:"Deuteronomy 28:8", text:"The Lord shall command the blessing upon thee in thy storehouses, and in all that thou settest thine hand unto; and he shall bless thee in the land which the Lord thy God giveth thee.", explanation:"In all that thou settest thine hand unto. This covers every lottery ticket you touch, every slot machine you pull, every card you draw. The blessing is commanded onto your hands. In hoodoo hand work this is particularly significant because the hands are where luck energy concentrates. Wash your hands with a luck floor wash or anoint them with money drawing oil and speak this verse before you play." }
+    ]
+  },
+  money: {
+    label: "Money Drawing and Financial Increase",
+    scriptures: [
+      { ref:"Deuteronomy 8:18", text:"But thou shalt remember the Lord thy God: for it is he that giveth thee power to get wealth, that he may establish his covenant.", explanation:"This is a foundational money drawing scripture in rootwork tradition. The power to generate wealth is not something you earn or wait for. It is already placed inside you as a divine gift. When your money work feels stuck or slow, return to this verse. It is a reminder that the blockage is not in your circumstances. It is in your alignment. Speak this to reset your wealth frequency." },
+      { ref:"Philippians 4:19", text:"But my God shall supply all your need according to his riches in glory by Christ Jesus.", explanation:"According to his riches, not according to your bank account or your circumstances. This scripture recalibrates the standard of what you are available to receive. In financial rootwork it is used to break the ceiling on what you believe is possible for you. Your supply is measured against divine riches which have no ceiling. Use this to expand your container." },
+      { ref:"Proverbs 13:22", text:"A good man leaveth an inheritance to his children's children: and the wealth of the sinner is laid up for the just.", explanation:"The wealth of the sinner is laid up for the just. This is a direct spiritual declaration that money which was misdirected, stolen, or held by those who did wrong is spiritually earmarked for you. In hoodoo justice and money work this verse is used when money has been taken from you or when financial doors have been closed unfairly. It is already yours in the spiritual realm. This scripture calls it home." },
+      { ref:"Luke 6:38", text:"Give, and it shall be given unto you; good measure, pressed down, and shaken together, and running over, shall men give into your bosom.", explanation:"The imagery is specific: pressed down, shaken together, running over. This is overflow language. In rootwork this scripture activates the law of circulation which is the spiritual principle that what you release returns multiplied. It is used in prosperity work to open the channel of receiving by first activating the channel of giving." },
+      { ref:"Malachi 3:10", text:"Bring ye all the tithes into the storehouse, that there may be meat in mine house, and prove me now herewith, saith the Lord of hosts, if I will not open you the windows of heaven, and pour you out a blessing, that there shall not be room enough to receive it.", explanation:"This is the only verse in all of scripture where the divine literally says test me. It is a covenant of overflow and a direct spiritual challenge to doubt. The windows of heaven are already open. The blessing is already pouring. Use this scripture to shift your spiritual posture from asking to receiving what is already in motion above you." }
+    ]
+  },
+  justice: {
+    label: "Divine Justice and Legal Victory",
+    scriptures: [
+      { ref:"Isaiah 54:17", text:"No weapon that is formed against thee shall prosper; and every tongue that shall rise against thee in judgment thou shalt condemn. This is the heritage of the servants of the Lord.", explanation:"This is one of the most worked scriptures in hoodoo court case and justice work. It is not a request. It is a declaration of what is already spiritually true. Every weapon formed against you has already failed in the spiritual court. Every tongue that spoke against you is already condemned. When you are facing legal situations, false accusations, or anyone working to harm your name, speak this daily as a decree over yourself." },
+      { ref:"Psalm 35:1", text:"Plead my cause, O Lord, with them that strive with me: fight against them that fight against me.", explanation:"Psalm 35 is a foundational court case psalm in rootwork tradition. It does not ask God to observe. It invites the divine into your situation as your legal counsel and your warrior. When human courts have failed you or when you are up against people with more power or resources, this verse summons the highest authority in existence to take your side. Work it with a purple or black candle and your name written on a piece of paper." },
+      { ref:"Romans 12:19", text:"Dearly beloved, avenge not yourselves, but rather give place unto wrath: for it is written, Vengeance is mine; I will repay, saith the Lord.", explanation:"In rootwork this scripture is used to spiritually transfer the burden of justice out of your hands and into divine hands. When you carry the weight of seeking revenge yourself, you energetically block the divine from moving on your behalf. This verse is the spiritual release that clears the channel. Once you speak it and mean it, you free the divine to move faster and more thoroughly than you ever could." },
+      { ref:"Micah 7:8", text:"Rejoice not against me, O mine enemy: when I fall, I shall arise; when I sit in darkness, the Lord shall be a light unto me.", explanation:"This is a declaration of spiritual resilience specifically directed at enemies and those who have worked against you. It is used in reversal and justice work when you have been knocked down and need to reassert your standing. The enemy who is watching and waiting for your permanent defeat receives notice through this scripture that your rising is already guaranteed." }
+    ]
+  },
+  love: {
+    label: "Love Drawing and Relationship Work",
+    scriptures: [
+      { ref:"Song of Solomon 8:7", text:"Many waters cannot quench love, neither can the floods drown it: if a man would give all the substance of his house for love, it would utterly be contemned.", explanation:"This verse establishes love as an indestructible cosmic force. In love drawing rootwork it is used to anchor the energy of unstoppable, unquenchable love around your petition. When you are calling someone back, drawing new love in, or trying to deepen an existing connection, this scripture sets the frequency: love that cannot be stopped by circumstance, distance, or outside interference." },
+      { ref:"1 Corinthians 13:8", text:"Charity never faileth.", explanation:"Three words that carry the weight of a law. Love in its true and aligned form cannot fail. In hoodoo love work this verse is used as a sealing declaration on any love petition or mojo bag. It is the final word that says this work will not fail because love itself does not fail. Speak it last after all other work is done." },
+      { ref:"Jeremiah 31:3", text:"The Lord hath appeared of old unto me, saying, Yea, I have loved thee with an everlasting love: therefore with lovingkindness have I drawn thee.", explanation:"The phrase drawn thee is spiritually significant in love drawing work. This verse demonstrates that love itself draws. When you align yourself with everlasting love as a frequency rather than a wish, you become magnetic to it. Use this to shift your energy from seeking love to embodying love, which is the state that actually draws it in." },
+      { ref:"Proverbs 18:22", text:"Whoso findeth a wife findeth a good thing, and obtaineth favour of the Lord.", explanation:"This scripture ties committed love and partnership directly to divine favor. In hoodoo marriage and commitment work it is used to call in a relationship that is not just romantic but divinely sanctioned and supported. Use it when you want to draw in a love that sticks, commits, and is blessed from above." }
+    ]
+  },
+  protection: {
+    label: "Spiritual Protection and Uncrossing",
+    scriptures: [
+      { ref:"Psalm 91:1", text:"He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.", explanation:"Psalm 91 is the most powerful protection psalm in all of rootwork tradition. Practitioners have used it for centuries in protection bottles, mojo bags, and personal shields. Verse 1 establishes the condition for divine protection: you must consciously dwell in it. Use this as a daily spoken declaration to set your spiritual shield before you move through the world. It is not passive protection. It is active positioning." },
+      { ref:"Isaiah 43:2", text:"When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee: when thou walkest through the fire, thou shalt not be burned; neither shall the flame kindle upon thee.", explanation:"This scripture is used in uncrossing work when someone has been spiritually burned or is walking through an extremely difficult situation. It does not promise you will avoid the fire. It promises the fire will not consume you. That distinction is spiritually critical. If you feel you have been crossed or hexed and are in the middle of the consequences, this verse is your assurance that you will walk out the other side whole." },
+      { ref:"Luke 10:19", text:"Behold, I give unto you power to tread on serpents and scorpions, and over all the power of the enemy: and nothing shall by any means hurt you.", explanation:"Serpents and scorpions in rootwork represent hidden enemies, spiritual attacks, and slow-acting crossed conditions. This verse grants explicit authority over all of it. Not some. All. Use this in protection work and enemy reversals. It is a statement of spiritual dominion that shifts you from victim of attack to sovereign over everything that was sent against you." },
+      { ref:"2 Thessalonians 3:3", text:"But the Lord is faithful, who shall stablish you, and keep you from evil.", explanation:"This verse is used in spiritual shielding work, particularly against people sending negative energy, working roots against you, or carrying malicious intent in your direction. It activates divine faithfulness as a literal barrier. When you feel spiritually vulnerable or targeted, this scripture reestablishes the covenant of divine keeping around your entire being." }
+    ]
+  },
+  healing: {
+    label: "Healing and Restoration",
+    scriptures: [
+      { ref:"Jeremiah 17:14", text:"Heal me, O Lord, and I shall be healed; save me, and I shall be saved: for thou art my praise.", explanation:"The structure of this verse is important in healing rootwork. It does not say heal me and maybe I will be healed. It declares that when divine healing touches you, healing is total and complete. Use this as a spoken declaration over yourself, over someone you are working for, or over any condition you are trying to break. Speak it with authority and with the knowing that the healing is already activated." },
+      { ref:"Isaiah 53:5", text:"But he was wounded for our transgressions, he was bruised for our iniquities: the chastisement of our peace was upon him; and with his stripes we are healed.", explanation:"The most important word in this verse for healing work is the tense: we ARE healed. Not we will be healed. Not we might be healed. The healing already exists on the spiritual plane. Your work is to call it into physical manifestation. Use this scripture to close the gap between the spiritual reality of your healing and your physical experience of it." },
+      { ref:"Psalm 147:3", text:"He healeth the broken in heart, and bindeth up their wounds.", explanation:"This scripture covers emotional and spiritual wounds that live deeper than the physical body. In rootwork it is used for grief work, heartbreak, trauma, and situations where the pain is not visible but is very real. The binding up language is deliberate. It speaks to wounds being closed, sealed, and made whole. Use this for any healing work that goes beyond the body and into the spirit." },
+      { ref:"Exodus 15:26", text:"I am the Lord that healeth thee.", explanation:"Five words carrying the full weight of a divine identity declaration. In hoodoo healing work this verse is used as an activation phrase spoken over healing baths, oils, and candle work. It is not a prayer. It is a declaration of what the divine is, which means healing is not an occasional gift. It is the nature of the source itself. Align with that nature and healing flows naturally." }
+    ]
+  },
+  enemies: {
+    label: "Enemy Work and Reversal",
+    scriptures: [
+      { ref:"Psalm 23:5", text:"Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over.", explanation:"This is one of the most used scriptures in domination and reversal work in hoodoo tradition. Notice it does not remove the enemies. It makes you overflow in front of them. Your blessing happens in plain view of everyone who wished otherwise. Your cup runs over while they watch. In spiritual practice this is worked when you want your success to be so undeniable that it operates as its own reversal on those who tried to stop you." },
+      { ref:"Exodus 14:14", text:"The Lord shall fight for you, and ye shall hold your peace.", explanation:"Ye shall hold your peace is a spiritual instruction to stop engaging with the enemy and let divine power move. In rootwork this verse is used when you have been exhausting your own energy fighting people and situations that do not deserve your attention. Every bit of energy you stop spending on the enemy frees up space for divine intervention. Speak this, go silent on the situation, and watch the shift begin." },
+      { ref:"Psalm 7:15", text:"He made a pit, and digged it, and is fallen into the ditch which he made.", explanation:"The law of return in scripture. Every trap laid for you falls back on the one who set it. This is used in reversal and return to sender work in hoodoo. You are not placing a curse. You are acknowledging a divine law that is already in motion. Whatever was sent against you is already traveling back. This scripture seals that reversal and gives it divine authority." },
+      { ref:"Isaiah 54:15", text:"Behold, they shall surely gather together, but not by me: whosoever shall gather together against thee shall fall for thy sake.", explanation:"Whosoever shall gather together against thee shall fall for thy sake. This is a remarkable verse for enemy work because it covers group attacks, people conspiring together, and organized opposition. It establishes that the very gathering of your enemies against you becomes the mechanism of their own fall. The more they organize against you, the more certain their collapse. Work this in any situation where multiple people are moving against you at once." }
+    ]
+  },
+  ancestors: {
+    label: "Ancestor Work and Spiritual Connection",
+    scriptures: [
+      { ref:"Hebrews 12:1", text:"Wherefore seeing we also are compassed about with so great a cloud of witnesses, let us lay aside every weight, and the sin which doth so easily beset us, and let us run with patience the race that is set before us.", explanation:"The cloud of witnesses is your ancestral spiritual team. They are not gone. They are watching, surrounding, and bearing witness to your life. In ancestor work this scripture is used to acknowledge their presence and open the channel of communication and assistance. They are compassed about you meaning they are already there. You are not calling them from a distance. You are becoming aware of what is already surrounding you." },
+      { ref:"Proverbs 13:22", text:"A good man leaveth an inheritance to his children's children: and the wealth of the sinner is laid up for the just.", explanation:"Your ancestors left you an inheritance in the spiritual realm even if none was left in the physical. This scripture is used in ancestor elevation work and inheritance drawing to call in what your bloodline has spiritually accumulated for you. The wealth that your positive ancestors earned through righteousness, sacrifice, and integrity is already stored and waiting to be claimed by you as their descendant." },
+      { ref:"Psalm 16:6", text:"The lines are fallen unto me in pleasant places; yea, I have a goodly heritage.", explanation:"A goodly heritage is your ancestral blessing. The lines that have been drawn around your life by your ancestors have fallen in pleasant places. Use this scripture in ancestor veneration work to give thanks for the protection, guidance, and inheritance your lineage has established for you. It also works in divination as an affirmation that the ancestral lines at work in your life are moving in your favor." },
+      { ref:"Isaiah 43:5", text:"Fear not: for I am with thee: I will bring thy seed from the east, and gather thee from the west.", explanation:"In ancestor work this verse speaks to the gathering of your scattered spiritual lineage from every direction. Many people in diaspora traditions have ancestral lines that were separated, broken, or lost. This scripture is a declaration that those lines are being gathered and restored. Use it in ancestor altar work to call in all branches of your ancestral support regardless of what direction they come from." }
+    ]
+  },
+  business: {
+    label: "Business Success and Open Roads",
+    scriptures: [
+      { ref:"Deuteronomy 28:8", text:"The Lord shall command the blessing upon thee in thy storehouses, and in all that thou settest thine hand unto; and he shall bless thee in the land which the Lord thy God giveth thee.", explanation:"In all that thou settest thine hand unto covers every business venture, every product you create, every client you serve, every invoice you send. The blessing is commanded onto your hands and your work. In rootwork this scripture is used in business blessing and road opener work to anoint everything your hands touch with divine increase. Write it on a piece of paper and place it under your business space or altar." },
+      { ref:"Isaiah 45:2", text:"I will go before thee, and make the crooked places straight: I will break in pieces the gates of brass, and cut in sunder the bars of iron.", explanation:"This is the quintessential road opener scripture in hoodoo tradition. Every blocked door, every crooked path, every brass gate that has been closed to you is being broken open by divine force moving ahead of you. Use this in road opener work, business launch work, and any situation where doors have been inexplicably shut. The divine goes before you to clear what you cannot clear yourself." },
+      { ref:"Proverbs 16:3", text:"Commit thy works unto the Lord, and thy thoughts shall be established.", explanation:"Thy thoughts shall be established means your vision, your plans, and your strategy will become real and stable. In business rootwork this scripture is used to ground and stabilize a new venture or to restore confidence in an existing one. Committing your work spiritually before you execute it physically aligns the spiritual and physical planes for maximum results." },
+      { ref:"Psalm 1:3", text:"And he shall be like a tree planted by the rivers of water, that bringeth forth his fruit in his season; his leaf also shall not wither; and whatsoever he doeth shall prosper.", explanation:"Whatsoever he doeth shall prosper. That is a blanket prosperity declaration over everything you put your hands to. The tree metaphor is also significant in rootwork because it speaks to being rooted, being fed continuously by living water, and bearing fruit in due season. Your business is a living thing. Feed its roots with this scripture and trust that what you have planted will produce." }
+    ]
+  },
+  court: {
+    label: "Court Case Work and Legal Victory",
+    scriptures: [
+      { ref:"Psalm 35:1", text:"Plead my cause, O Lord, with them that strive with me: fight against them that fight against me.", explanation:"This is the primary court case psalm in all of hoodoo and rootwork tradition. Practitioners have used it for generations when facing judges, attorneys, police, and any form of legal opposition. You are not entering that courtroom alone. You are summoning the highest legal authority in existence to represent you. Write this psalm on a piece of brown paper and carry it with you to court." },
+      { ref:"Isaiah 54:17", text:"No weapon that is formed against thee shall prosper; and every tongue that shall rise against thee in judgment thou shalt condemn.", explanation:"Every tongue that rises against you in judgment you shall condemn. In court case work this covers every witness who speaks against you, every lawyer who argues against you, and every piece of evidence presented against you. It is already spiritually nullified. Use this the morning of any court appearance as a declaration spoken three times over yourself." },
+      { ref:"Proverbs 21:1", text:"The king's heart is in the hand of the Lord, as the rivers of water: he turneth it whithersoever he will.", explanation:"The king is the judge. The heart of the person with authority over your case is in divine hands and can be turned in your favor. This scripture is used in court case work to spiritually influence the mind and heart of judges and authority figures toward mercy and favor. In rootwork it is combined with influencing oils and worked on a name paper of the judge or authority figure." },
+      { ref:"Psalm 37:6", text:"And he shall bring forth thy righteousness as the light, and thy judgment as the noonday.", explanation:"Your truth will be brought into the light as bright as noon. When you are in a legal situation where the truth has been obscured or ignored, this scripture activates the spiritual mechanism that brings your righteousness into full visibility. No darkness can hide your truth when this verse is spiritually activated on your behalf." }
+    ]
+  },
+  uncrossing: {
+    label: "Uncrossing and Removing Blockages",
+    scriptures: [
+      { ref:"Psalm 51:7", text:"Purge me with hyssop, and I shall be clean: wash me, and I shall be whiter than snow.", explanation:"Hyssop is one of the most sacred cleansing herbs in both biblical and hoodoo tradition and it is explicitly named here. This verse is used in uncrossing baths, spiritual cleansing rituals, and any work designed to remove crossed conditions, spiritual dirt, or negative attachments. The purging spoken of here is total and complete. When God washes, nothing of the old condition remains." },
+      { ref:"Isaiah 1:18", text:"Come now, and let us reason together, saith the Lord: though your sins be as scarlet, they shall be as white as snow; though they be red like crimson, they shall be as wool.", explanation:"This scripture is the spiritual promise of complete cleansing regardless of how deeply a condition has set in. In rootwork when a cross or hex feels deeply embedded or has been in place for a long time, this verse is the authority that says no crossed condition is too stubborn for divine removal. Use it in conjunction with a three day uncrossing bath to spiritually reset your entire field." },
+      { ref:"Psalm 91:3", text:"Surely he shall deliver thee from the snare of the fowler, and from the noisome pestilence.", explanation:"The snare of the fowler refers to traps set specifically to catch you, which in hoodoo tradition covers rootwork done against you, spiritual traps laid in your path, and any negative work designed to hold you in place or bring you down. This scripture activates divine deliverance from every snare regardless of who set it or how long it has been in place." },
+      { ref:"Numbers 23:23", text:"Surely there is no enchantment against Jacob, neither is there any divination against Israel.", explanation:"This verse is one of the strongest anti-hex and anti-curse scriptures in rootwork. It establishes that no enchantment, no working, and no spiritual operation directed against you can stand when you are in divine alignment. Use this in uncrossing work to declare that whatever was sent against you has no power and no standing. Speak it over your cleansing water before you bathe." }
+    ]
+  },
+  fertility: {
+    label: "Fertility, Pregnancy and New Beginnings",
+    scriptures: [
+      { ref:"Psalm 113:9", text:"He maketh the barren woman to keep house, and to be a joyful mother of children. Praise ye the Lord.", explanation:"This scripture is one of the most directly worked verses in fertility rootwork. It speaks specifically to the transformation of barrenness into motherhood through divine intervention. Use this in fertility candle work, womb healing rituals, and any spiritual work centered on pregnancy and new life. It carries the energy of divine reversal, turning a condition of lack into fullness." },
+      { ref:"Genesis 1:28", text:"And God blessed them, and God said unto them, Be fruitful, and multiply, and replenish the earth.", explanation:"The first blessing spoken over humanity in scripture is be fruitful and multiply. Fruitfulness is your original divine blessing. In fertility work this verse is used to re-activate and reclaim that first blessing over your body, your family, and any new beginning you are calling in. It establishes fruitfulness not as a hope but as a divine directive spoken directly over you." },
+      { ref:"Isaiah 54:1", text:"Sing, O barren, thou that didst not bear; break forth into singing, and cry aloud, thou that didst not travail with child: for more are the children of the desolate than the children of the married wife, saith the Lord.", explanation:"This verse is used in fertility and womb work specifically for those who have been waiting the longest. The divine speaks directly to the barren and promises more fruit than those who have had no difficulty. It is a scripture of divine reversal and overflow. The longer the wait, the greater the eventual harvest. Speak this over yourself with your hands placed on your womb." }
+    ]
+  },
+  travel: {
+    label: "Travel Safety and Journey Protection",
+    scriptures: [
+      { ref:"Psalm 121:8", text:"The Lord shall preserve thy going out and thy coming in from this time forth, and even for evermore.", explanation:"Going out and coming in covers every departure and every return of every journey you take. This scripture is worked in travel protection bags, car blessings, and any rootwork centered on safe passage. The preservation spoken of here is active and continuous, not occasional. Use this before any trip, flight, or long journey and know that every movement you make is spiritually covered." },
+      { ref:"Isaiah 41:10", text:"Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", explanation:"When travel anxiety or fear of danger is part of what you are working through, this scripture dismantles fear as a spiritual force. Fear attracts what it focuses on. This verse replaces fear with divine accompaniment, strength, and upholding. Speak it before boarding any vehicle or entering any unfamiliar territory." },
+      { ref:"Deuteronomy 31:8", text:"And the Lord, he it is that doth go before thee; he will be with thee, he will not fail thee, neither forsake thee: fear not, neither be dismayed.", explanation:"He goes before you. Whatever road you are about to travel, whatever unfamiliar place you are headed to, the divine has already arrived there ahead of you and is preparing it for your safe passage. This scripture is particularly powerful for those traveling to places they have never been or through situations that feel uncertain." }
+    ]
+  },
+  abundance: {
+    label: "General Abundance and Overflow",
+    scriptures: [
+      { ref:"John 10:10", text:"The thief cometh not, but for to steal, and to kill, and to destroy: I am come that they might have life, and that they might have it more abundantly.", explanation:"Abundance is declared here as the literal purpose and intention behind divine presence in your life. Not survival. Not enough to get by. Abundance. This scripture dismantles the spiritual belief that wanting more is wrong or that struggle is holy. It is used in prosperity work to re-align with the truth that overflow is not greedy. It is what you were designed for. Speak it as a daily declaration to reset your prosperity frequency." },
+      { ref:"2 Corinthians 9:8", text:"And God is able to make all grace abound toward you; that ye, always having all sufficiency in all things, may abound to every good work.", explanation:"All grace, all sufficiency, all things, always. The repetition of all is spiritually intentional. This is not a scripture of partial provision or conditional overflow. It is a blanket declaration of total spiritual and material sufficiency at all times. Use this in abundance work when you need to expand beyond what current circumstances suggest is your limit." },
+      { ref:"Ephesians 3:20", text:"Now unto him that is able to do exceeding abundantly above all that we ask or think, according to the power that worketh in us.", explanation:"Above all that we ask or think. Your imagination sets a ceiling. This verse declares that the divine operates above that ceiling. In abundance and manifestation work this scripture is used to remove the upper limit on what you are calling in. Your vision is not too big. Your ask is not too much. The power at work inside you has no ceiling." }
+    ]
+  }
+};
+
+function detect(text) {
+  const t = text.toLowerCase();
+  const scores = {};
+  const keys = {
+    gambling: ['gambl','casino','slot','blackjack','poker','dice','bet','wager','card game','horse race','sports bet','bingo','scratch','roulette','jackpot','winning number','lucky number','play the number'],
+    lottery: ['lottery','lotto','powerball','mega million','pick 3','pick 4','scratch off','scratch ticket','daily number','number hit','dream number','lucky number','win big'],
+    money: ['money','owe','owed','debt','pay','paid','financial','broke','bill','invoice','income','wealth','salary','refund','give back','stolen','took my','return what','what is mine','get paid','getting paid'],
+    justice: ['justice','unfair','wronged','lied','cheated','cheating','accused','false accusation','rights','vindication','they lied','treated me wrong','being blamed','not my fault'],
+    love: ['love','relationship','partner','heart','lonely','alone','marriage','husband','wife','boyfriend','girlfriend','romance','connection','broken heart','heartbreak','soulmate','come back','return to me','missing them'],
+    protection: ['protect','danger','threat','fear','scared','attack','evil','hex','curse','stalker','unsafe','harm','spiritual attack','bad energy','someone after me','watching me','feeling watched','crossed','jinxed'],
+    healing: ['heal','sick','pain','hurt','trauma','grief','loss','depression','anxiety','wound','broken','recover','restore','illness','suffering','mental health','hospital','diagnosis','chronic','disease'],
+    enemies: ['enemy','enemies','someone against me','working against','scheming','plotting','jealous','sabotage','backstab','block me','hater','rivalry','compete','rival','talk about me','spreading lies','talking bad'],
+    ancestors: ['ancestor','grandmother','grandfather','grandma','grandpa','deceased','passed away','spirit of my','bloodline','lineage','family spirits','connect with','communicate with','hear from','sign from','my mother passed','my father passed'],
+    business: ['business','client','customer','sales','slow business','open doors','opportunity','career','promotion','job','interview','launch','brand','grow my','expand','network','contract','deal'],
+    court: ['court','judge','lawyer','attorney','case','charges','arrested','trial','hearing','custody','lawsuit','legal','sue','being sued','legal trouble','probation','parole','settlement','divorce proceedings'],
+    uncrossing: ['uncross','crossed','jinxed','cursed','hexed','block','something on me','bad luck','nothing going right','everything falling apart','feel heavy','dragging','dark cloud','negative energy','remove','cleanse','clean my','spiritual dirt'],
+    fertility: ['pregnant','pregnancy','baby','fertility','conceive','conceiving','barren','trying to have','womb','miscarriage','new life','start a family','having a child'],
+    travel: ['travel','trip','flight','drive','road','journey','safe travel','traveling','moving','relocate','relocating','new city','new country','crossing','border'],
+    abundance: ['abundance','prosper','bless','manifest','attract','overflow','more','grow','expand','level up','upgrade','success','thrive','goals','vision','prosperity','overflow']
+  };
+
+  for (const [cat, words] of Object.entries(keys)) {
+    scores[cat] = 0;
+    for (const w of words) { if (t.includes(w)) scores[cat]++; }
+  }
+
+  let best = 'abundance', bestScore = 0;
+  for (const [cat, score] of Object.entries(scores)) {
+    if (score > bestScore) { bestScore = score; best = cat; }
+  }
+  return best;
+}
+
+function shuffled(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function generate() {
   const input = document.getElementById('situationInput').value.trim();
   if (!input) { document.getElementById('situationInput').focus(); return; }
 
-  const btn = document.getElementById('generateBtn');
-  btn.disabled = true;
-  btn.textContent = 'Gathering Your Scriptures...';
+  const cat = detect(input);
+  const bucket = DB[cat];
+  const pool = shuffled(bucket.scriptures).slice(0, selectedCount);
 
-  try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: `You are a spiritual advisor who specializes in hoodoo, rootwork, and black spiritual practice. You have deep knowledge of the Bible as a spiritual tool, not as religion, but as a source of activated spiritual power for manifestation, protection, justice, luck, love, money, and all spiritual conditions.
-
-The user will describe their situation. You must:
-1. Identify what spiritual condition or need they have. Be broad. It could be gambling luck, lottery, love, money owed, protection, enemies, healing, court cases, crossing roads, opening doors, uncrossing, binding, fertility, business success, travel safety, dream work, ancestor connection, or anything else.
-2. Select ${selectedCount} real Bible scripture(s) that are genuinely powerful for that specific situation in hoodoo and spiritual practice.
-3. For each scripture write a deeply spiritual explanation of why it works for THEIR specific situation. Not generic. Not religious. Ground it in the energy, the vibration, and the rootwork use.
-
-CRITICAL WRITING RULES you must follow in every word you write:
-- NEVER use em dashes (the long dash like this: ) anywhere
-- NEVER use en dashes anywhere
-- NEVER use hyphens to connect phrases or as punctuation. Hyphens are only allowed inside compound words like rootwork, hoodoo, or scripture references like chapter verse numbers
-- Write in clear flowing sentences with no dashes of any kind
-- Use commas, periods, and natural sentence breaks instead
-
-Respond ONLY in this exact JSON format, no preamble, no markdown:
-{
-  "condition": "short label for their spiritual condition",
-  "scriptures": [
-    {
-      "ref": "Book Chapter:Verse",
-      "text": "exact scripture text",
-      "explanation": "why this works for their specific situation in spiritual/hoodoo terms"
-    }
-  ]
-}`,
-        messages: [{ role: "user", content: input }]
-      })
-    });
-
-    const data = await response.json();
-    const raw = data.content[0].text;
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const result = JSON.parse(clean);
-    renderResults(result);
-
-  } catch(err) {
-    console.error(err);
-    btn.disabled = false;
-    btn.textContent = 'Receive Your Scriptures';
-    document.getElementById('resultsSection').innerHTML = '<div class="results-wrap"><p style="color:var(--white-mid);text-align:center;padding:40px 0;">Something went wrong. Please try again.</p></div>';
-    document.getElementById('resultsSection').style.display = 'block';
-    document.getElementById('formSection').style.display = 'none';
-  }
-}
-
-function copyScriptures(result) {
-  let text = result.condition.toUpperCase() + '\n\n';
-  result.scriptures.forEach((s, i) => {
-    text += `Scripture ${i+1} of ${result.scriptures.length}\n`;
-    text += `${s.ref}\n`;
-    text += `"${s.text}"\n\n`;
-    text += `Why this works for your situation:\n${s.explanation}\n\n`;
-    text += '---\n\n';
-  });
-  text += 'Generated by Master Manifestor 888';
-
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copyBtn');
-    if (btn) {
-      btn.textContent = 'Copied!';
-      setTimeout(() => { btn.textContent = 'Copy My Scriptures'; }, 2500);
-    }
-  }).catch(() => {
-    // Fallback for browsers that block clipboard
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    const btn = document.getElementById('copyBtn');
-    if (btn) {
-      btn.textContent = 'Copied!';
-      setTimeout(() => { btn.textContent = 'Copy My Scriptures'; }, 2500);
-    }
-  });
-}
-
-function sanitizeDashes(text) {
-  if (!text) return text;
-  return text
-    .replace(/—/g, ' ')
-    .replace(/–/g, ' ')
-    .replace(/‒/g, ' ')
-    .replace(/ - /g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function renderResults(result) {
-  window._lastResult = result;
-  result.condition = sanitizeDashes(result.condition);
-  result.scriptures = result.scriptures.map(s => ({
-    ...s,
-    text: sanitizeDashes(s.text),
-    explanation: sanitizeDashes(s.explanation)
-  }));
   let html = `<div class="results-wrap">
-    <div class="cat-tag"><span class="cat-dot"></span>${result.condition}</div>`;
+    <div class="cat-tag"><span class="cat-dot"></span>${bucket.label}</div>`;
 
-  result.scriptures.forEach((s, i) => {
+  pool.forEach((s, i) => {
     html += `<div class="scripture-block">
-      <div class="s-num">Scripture ${i+1} of ${result.scriptures.length}</div>
+      <div class="s-num">Scripture ${i+1} of ${pool.length}</div>
       <div class="s-ref">${s.ref}</div>
       <p class="s-verse">${s.text}</p>
       <div class="s-exp-label">Why this works for your situation</div>
@@ -558,25 +631,52 @@ function renderResults(result) {
   });
 
   html += `<div class="result-actions">
-    <button class="btn-save" id="copyBtn" onclick="copyScriptures(window._lastResult)">Copy My Scriptures</button>
+    <button class="btn-save" id="copyBtn" onclick="copyScriptures()">Copy My Scriptures</button>
     <button class="btn-reset" onclick="resetForm()">Start Over</button>
   </div></div>`;
+
+  window._lastPool = pool;
+  window._lastLabel = bucket.label;
 
   document.getElementById('formSection').style.display = 'none';
   const rs = document.getElementById('resultsSection');
   rs.innerHTML = html; rs.style.display = 'block';
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function copyScriptures() {
+  const pool = window._lastPool;
+  const label = window._lastLabel;
+  if (!pool) return;
+
+  let text = label.toUpperCase() + '\n\n';
+  pool.forEach((s, i) => {
+    text += `Scripture ${i+1} of ${pool.length}\n`;
+    text += `${s.ref}\n`;
+    text += `"${s.text}"\n\n`;
+    text += `Why this works for your situation:\n${s.explanation}\n\n`;
+    if (i < pool.length - 1) text += '\n';
+  });
+  text += 'Generated by Master Manifestor 888';
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy My Scriptures'; }, 2500); }
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    const btn = document.getElementById('copyBtn');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy My Scriptures'; }, 2500); }
+  });
 }
 
 function resetForm() {
-  const btn = document.getElementById('generateBtn');
-  btn.disabled = false;
-  btn.textContent = 'Receive Your Scriptures';
   document.getElementById('resultsSection').style.display = 'none';
   document.getElementById('resultsSection').innerHTML = '';
   document.getElementById('formSection').style.display = 'block';
   document.getElementById('situationInput').value = '';
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 </script>
 </body>
